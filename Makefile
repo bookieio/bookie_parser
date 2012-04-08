@@ -33,3 +33,12 @@ heroku:
 
 .PHONY: foreman
 foreman: foreman start
+
+.PHONY: run
+run:
+	gunicorn -k tornado -p app.pid bookie_parser &
+
+.PHONY: stop
+stop:
+	kill -9 `cat app.pid` || true
+	rm app.pid || true

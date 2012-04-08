@@ -9,6 +9,7 @@ import urllib
 
 from collections import namedtuple
 from readability.readability import Document
+from tornado import template
 
 # For pretty log messages, if available
 try:
@@ -119,10 +120,14 @@ logging.getLogger().setLevel(getattr(logging, LOGLEVEL))
 enable_pretty_logging()
 LOG = logging.getLogger()
 
+# Template loader
+TPL = template.Loader(os.path.join(os.path.dirname(__file__), 'tpl'))
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello, world")
+        self.content_type = 'text/html'
+        t = TPL.load('index.html')
+        self.write(t.generate())
 
 
 class ReadableHandler(tornado.web.RequestHandler):
