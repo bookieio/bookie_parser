@@ -2,3 +2,4 @@ lxml
 readability-lxml
 tornado
 gunicorn
+pycurl
