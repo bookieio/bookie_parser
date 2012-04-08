@@ -26,3 +26,10 @@ clean_venv:
 develop: lib/python*/site-packages/bookie_parser.egg-link
 lib/python*/site-packages/bookie_parser.egg-link:
 	$(PY) setup.py develop
+
+.PHONY: heroku
+heroku:
+	git push heroku master
+
+.PHONY: foreman
+foreman: foreman start
