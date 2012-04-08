@@ -125,9 +125,10 @@ class ReadableHandler(tornado.web.RequestHandler):
         content = self.get_argument('content')
 
         # html = urllib.urlopen(url).read()
-        readable_article = Document(content).summary()
+        doc = Document(content)
+        readable_article = doc.summary()
         try:
-            readable_title = Document(content).short_title()
+            readable_title = doc.short_title()
         except AttributeError, exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
