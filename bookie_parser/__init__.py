@@ -4,7 +4,6 @@ import sys
 import tornado.ioloop
 import tornado.web
 
-from readability.readability import Document
 from tornado import template
 
 # Template loader

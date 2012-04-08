@@ -1,8 +1,10 @@
 """Tornado request handlers for our application."""
 from tornado.web import RequestHandler
+from readability.readability import Document
 
 from bookie_parser import TPL
 from bookie_parser.logconfig import LOG
+
 
 class MainHandler(RequestHandler):
     """The main index handler."""
