@@ -1,3 +1,4 @@
 lxml
 readability-lxml
 tornado
+gunicorn

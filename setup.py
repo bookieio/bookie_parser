@@ -12,11 +12,11 @@ install_requires = [
     # For more details, see:
     # http://packages.python.org/distribute/setuptools.html#declaring-dependencies
     'lxml',
-    'readability-lxml'
+    'readability-lxml',
     'tornado',
 ]
 
-tests_requires = [
+tests_require = [
     'nose',
     'coverage',
     'webtest',
@@ -38,8 +38,8 @@ setup(name='bookie_parser',
     author_email='rharding@mitechie.com',
     url='docs.bmark.us',
     license='BSD',
-    packages=find_packages('src'),
-    package_dir = {'': 'src'},include_package_data=True,
+    packages=find_packages('bookie_parser'),
+    package_dir = {'': 'bookie_parser'},include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
     tests_require=tests_require,

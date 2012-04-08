@@ -1,0 +1,1 @@
+web: cd src && ../bin/gunicorn -k tornado --workers=4 --bind=0.0.0.0:$PORT bookie_parser:main

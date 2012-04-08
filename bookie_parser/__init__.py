@@ -153,7 +153,6 @@ application = tornado.web.Application([
 
 
 def main(port=5000):
-    LOG.debug('starting server on port: ' + str(port))
     LOG.info('starting server on port: ' + str(port))
     port = int(os.environ.get("PORT", port))
     application.listen(port)
