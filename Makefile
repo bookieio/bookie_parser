@@ -53,4 +53,5 @@ heroku:
 	git push heroku master
 
 .PHONY: foreman
-foreman: foreman start
+foreman:
+	foreman start
