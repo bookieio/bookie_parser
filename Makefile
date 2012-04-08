@@ -7,6 +7,9 @@ PIP_MIR = PIP_FIND_LINKS='http://mypi http://simple.crate.io/'
 NOSE := bin/nosetests
 GUNICORN := bin/gunicorn
 
+# #######
+# INSTALL
+# #######
 .PHONY: all
 all: deps
 
@@ -27,13 +30,10 @@ develop: lib/python*/site-packages/bookie_parser.egg-link
 lib/python*/site-packages/bookie_parser.egg-link:
 	$(PY) setup.py develop
 
-.PHONY: heroku
-heroku:
-	git push heroku master
 
-.PHONY: foreman
-foreman: foreman start
-
+# ###########
+# Development
+# ###########
 .PHONY: run
 run:
 	gunicorn -k tornado -p app.pid bookie_parser &
@@ -42,3 +42,15 @@ run:
 stop:
 	kill -9 `cat app.pid` || true
 	rm app.pid || true
+
+
+# ###############
+# Heroku controls
+# ###############
+
+.PHONY: heroku
+heroku:
+	git push heroku master
+
+.PHONY: foreman
+foreman: foreman start
