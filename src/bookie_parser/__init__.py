@@ -18,7 +18,7 @@ except ImportError:
 
 # Logging bits stolen and adapted from:
 # http://www.tornadoweb.org/documentation/_modules/tornado/options.html
-LOGLEVEL="DEBUG"
+LOGLEVEL = "DEBUG"
 LogOptions = namedtuple('LogOptions', [
     'loglevel',
     'log_file_prefix',
@@ -34,6 +34,7 @@ options = LogOptions(
     log_file_num_backups=5,
     log_to_stderr=True,
 )
+
 
 def enable_pretty_logging():
     """Turns on formatted logging output as configured.
@@ -77,14 +78,18 @@ class _LogFormatter(logging.Formatter):
             fg_color = unicode(curses.tigetstr("setaf") or
                                curses.tigetstr("setf") or "", "ascii")
             self._colors = {
-                logging.DEBUG: unicode(curses.tparm(fg_color, 4), # Blue
-                                       "ascii"),
-                logging.INFO: unicode(curses.tparm(fg_color, 2), # Green
-                                      "ascii"),
-                logging.WARNING: unicode(curses.tparm(fg_color, 3), # Yellow
-                                         "ascii"),
-                logging.ERROR: unicode(curses.tparm(fg_color, 1), # Red
-                                       "ascii"),
+                logging.DEBUG: unicode(
+                    curses.tparm(fg_color, curses.COLOR_CYAN),
+                   "ascii"),
+                logging.INFO: unicode(
+                    curses.tparm(fg_color, curses.COLOR_GREEN),
+                    "ascii"),
+                logging.WARNING: unicode(
+                    curses.tparm(fg_color, curses.COLOR_YELLOW),  # Yellow
+                    "ascii"),
+                logging.ERROR: unicode(
+                    curses.tparm(fg_color, curses.COLOR_RED),  # Red
+                    "ascii"),
             }
             self._normal = unicode(curses.tigetstr("sgr0"), "ascii")
 
@@ -148,6 +153,7 @@ application = tornado.web.Application([
 
 
 def main(port=5000):
+    LOG.debug('starting server on port: ' + str(port))
     LOG.info('starting server on port: ' + str(port))
     port = int(os.environ.get("PORT", port))
     application.listen(port)
@@ -156,4 +162,3 @@ def main(port=5000):
 
 if __name__ == "__main__":
     main()
-
