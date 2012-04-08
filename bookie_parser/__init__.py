@@ -152,12 +152,14 @@ application = tornado.web.Application([
 ])
 
 
-def main(port=5000):
+def main(host='0.0.0.0', port=5000):
     LOG.info('starting server on port: ' + str(port))
-    port = int(os.environ.get("PORT", port))
     application.listen(port)
     tornado.ioloop.IOLoop.instance().start()
 
 
 if __name__ == "__main__":
-    main()
+    # Bind to PORT if defined, otherwise default to 5000.
+    port = int(os.environ.get('PORT', 5000))
+    LOG.warning(port)
+    main(host='0.0.0.0', port=port)
