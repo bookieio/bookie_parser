@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta name="viewport" content="width=device-width" initial-scale="1.0">
+        <title>Bookie Readable Parsing</title>
+    </head>
+    <body>
+        <p>Welcome to the Bookie Readable Parser. This site provides an api
+        for parsing the content of a web page and providing a clear and
+        readable version of it.</p>
+        <p>In the future we plan on adding additional logic to the application
+        to help aid in selecting tags and other bits of metadata about the
+        content.</p>
+
+        <h2>API</h2>
+        <p>Example calls are shows using the <a href="">HTTPie</a> Python
+        tool. It really makes testing out api calls and such a lot easer.</p>
+
+        <pre>$ http -f POST "http://readable.bmark.us/readable/google.com" content="&lt;h1&gt;Hello world&lt;h1&gt;
+
+        </pre>
+        Response:
+        <pre>
+        HTTP/1.1 200 OK
+        Content-Type: application/json; charset=UTF-8
+        Server: TornadoServer/2.2 (Gunicorn/0.14.2)
+        Content-Length: 115
+        Connection: keep-alive
+
+        {
+            "readable": "&lt;body id=\"readabilityBody\"&gt;&lt;h1&gt;Hello world&lt;/h1&gt;&lt;/body&gt;",
+            "title": "Unknown",
+            "url": "google.com"
+        }
+        </pre>
+    </body>
+</html>
