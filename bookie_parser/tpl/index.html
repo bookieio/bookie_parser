@@ -16,22 +16,39 @@
         <p>Example calls are shows using the <a href="">HTTPie</a> Python
         tool. It really makes testing out api calls and such a lot easer.</p>
 
-        <pre>$ http -f POST "http://readable.bmark.us/readable/google.com" content="&lt;h1&gt;Hello world&lt;h1&gt;
-
-        </pre>
+<pre>$ http -f POST "http://readable.bmark.us/readable/google.com" content="&lt;h1&gt;Hello world&lt;h1&gt;</pre>
         Response:
-        <pre>
-        HTTP/1.1 200 OK
-        Content-Type: application/json; charset=UTF-8
-        Server: TornadoServer/2.2 (Gunicorn/0.14.2)
-        Content-Length: 115
-        Connection: keep-alive
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Server: TornadoServer/2.2 (Gunicorn/0.14.2)
+Content-Length: 115
+Connection: keep-alive
 
-        {
-            "readable": "&lt;body id=\"readabilityBody\"&gt;&lt;h1&gt;Hello world&lt;/h1&gt;&lt;/body&gt;",
-            "title": "Unknown",
-            "url": "google.com"
-        }
-        </pre>
+{
+    "readable": "&lt;body id=\"readabilityBody\"&gt;&lt;h1&gt;Hello world&lt;/h1&gt;&lt;/body&gt;",
+    "title": "Unknown",
+    "url": "google.com"
+}
+</pre>
+
+<pre>$ http -f GET
+"http://readable.bmark.us/readable/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
+Response:
+<pre>
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Etag: "d9eb34be9c858960e266571168419466ce423dba"
+Server: TornadoServer/2.2 (Gunicorn/0.14.2)
+Content-Length: 4812
+Connection: keep-alive
+
+{
+    "readable": "&lt;html&gt;&lt;body/&gt;&lt;div id=\"content\"&gt;...&lt;/div&gt;\n&lt;/html&gt;",
+    "title": "Tornado Web Server",
+    "url": "tornadoweb.org/documentation/httpclient.html#tornado.httpclient.AsyncHTTPClient.configure"
+}
+</pre>
     </body>
 </html>
