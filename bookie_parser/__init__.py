@@ -13,11 +13,13 @@ TPL = template.Loader(os.path.join(os.path.dirname(__file__), 'tpl'))
 from bookie_parser.logconfig import LOG
 from bookie_parser.handlers import MainHandler
 from bookie_parser.handlers import ReadableHandler
+from bookie_parser.handlers import ViewableHandler
 
 
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/readable/(.*)", ReadableHandler),
+    (r"/view/(.*)", ViewableHandler),
 ])
 
 

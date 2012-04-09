@@ -17,6 +17,37 @@ class MainHandler(RequestHandler):
         self.write(t.generate())
 
 
+class ViewableHandler(RequestHandler):
+    """I want to be readable parsed, but returned for viewing."""
+    @asynchronous
+    def get(self, url):
+        """Getting will fetch the content for the url."""
+        httpclient.AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
+        http = httpclient.AsyncHTTPClient()
+        try:
+            http.fetch(url, self._on_download)
+        except httpclient.HTTPError, exc:
+            LOG.error(e)
+
+    def _on_download(self, response):
+        """On downloading the url content, make sure we readable it."""
+        LOG.info(response.request_time)
+        self._readable_content(response.request.url, response.body)
+        self.finish()
+
+    def _readable_content(self, url, content):
+        """Shared helper to process and respond with the content."""
+        doc = Document(content)
+        readable_article = doc.summary()
+        try:
+            readable_title = doc.short_title()
+        except AttributeError, exc:
+            LOG.error(str(exc))
+            readable_title = 'Unknown'
+        self.content_type = 'text/html'
+        self.write(readable_article)
+
+
 class ReadableHandler(RequestHandler):
     """Readable parsing routes."""
 
