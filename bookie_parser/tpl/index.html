@@ -3,6 +3,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
         <meta name="viewport" content="width=device-width" initial-scale="1.0">
         <title>Bookie Readable Parsing</title>
+        <style type="text/css">
+        pre {
+            background: lightyellow none repeat scroll 0 0;
+            border:1px inset orange;
+            margin:10px;
+            overflow:auto;
+            padding:6px;
+            text-align:left;
+        }
+        </style>
     </head>
     <body>
         <p>Welcome to the Bookie Readable Parser. This site provides an api
@@ -16,8 +26,8 @@
         <p>Example calls are shows using the <a href="">HTTPie</a> Python
         tool. It really makes testing out api calls and such a lot easer.</p>
 
+<h3>Posting Content</h3>
 <pre>$ http -f POST "http://readable.bmark.us/readable/google.com" content="&lt;h1&gt;Hello world&lt;h1&gt;</pre>
-        Response:
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
@@ -32,8 +42,8 @@ Connection: keep-alive
 }
 </pre>
 
+<h3>Fetching URL Content</h3>
 <pre>$ http -f GET "http://readable.bmark.us/readable/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
-Response:
 <pre>
 
 HTTP/1.1 200 OK
@@ -50,7 +60,7 @@ Connection: keep-alive
 }
 </pre>
 
+<h3>Viewing URL Content</h3>
 <pre>$ http -f GET "http://readable.bmark.us/view/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
-Response: html page of the readable content.
     </body>
 </html>
