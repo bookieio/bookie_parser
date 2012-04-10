@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta name="viewport" content="width=device-width" initial-scale="1.0">
+        <title>Bookie Readable Parsing</title>
+        <link rel="stylesheet" href="{{static_url('base.css')}}" type="text/css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        <div class="readable">
+            <div id="readable_content">
+                {% autoescape None %}
+                {{content}}
+            </div>
+        </div>
+    </body>
+</html>
