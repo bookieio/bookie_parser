@@ -3,17 +3,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
         <meta name="viewport" content="width=device-width" initial-scale="1.0">
         <title>Bookie Readable Parsing</title>
-        <style type="text/css">
-        pre {
-            background: lightyellow none repeat scroll 0 0;
-            border:1px inset orange;
-            margin:10px;
-            overflow:auto;
-            padding:6px;
-            text-align:left;
-            white-space: pre-wrap;
-        }
-        </style>
+        <link rel="stylesheet" href="{{static_url('base.css')}}" type="text/css" media="screen" charset="utf-8">
     </head>
     <body>
         <p>Welcome to the Bookie Readable Parser. This site provides an api
@@ -25,6 +15,15 @@
         <p>In the future we plan on adding additional logic to the application
         to help aid in selecting tags and other bits of metadata about the
         content.</p>
+
+        <h2>Bookmarklet</h2>
+        <p>Drag this bookmarklet to your browser's bookmark bar and click on
+        it when viewing a site you want to read in a clean way.  <a
+            title="View with Bookmark Parser" href="javascript:(function()
+            {location.href='http://readable.bmark.us/view/'+encodeURIComponent(location.href)}())">Read
+            with Bookie</a>
+        </p>
+        <pre>javascript:(function() {location.href='https://readable.bmark.us/view/'+encodeURIComponent(location.href)}())</pre>
 
         <h2>API</h2>
         <p>Example calls are shows using the <a href="">HTTPie</a> Python

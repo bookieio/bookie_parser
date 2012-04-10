@@ -3,3 +3,4 @@ readability-lxml
 tornado
 gunicorn
 pycurl
+pyscss

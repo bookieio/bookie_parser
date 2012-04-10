@@ -6,6 +6,7 @@ PIP := bin/pip
 PIP_MIR = PIP_FIND_LINKS='http://mypi http://simple.crate.io/'
 NOSE := bin/nosetests
 GUNICORN := bin/gunicorn
+CSS := bin/pyscss
 
 # #######
 # INSTALL
@@ -34,6 +35,13 @@ lib/python*/site-packages/bookie_parser.egg-link:
 # ###########
 # Development
 # ###########
+.PHONY: css
+css: base.css
+
+base.css:
+	$(CSS) -o bookie_parser/static/base.css bookie_parser/static/base.scss
+
+
 .PHONY: run
 run:
 	gunicorn -k tornado -p app.pid bookie_parser &

@@ -7,8 +7,8 @@ import tornado.web
 from tornado import template
 
 # Template loader
-TPL = template.Loader(os.path.join(os.path.dirname(__file__), 'tpl'))
-
+TPL_PATH = os.path.join(os.path.dirname(__file__), 'tpl')
+STATIC_PATH = os.path.join(os.path.dirname(__file__), 'static')
 
 from bookie_parser.logconfig import LOG
 from bookie_parser.handlers import MainHandler
@@ -16,11 +16,16 @@ from bookie_parser.handlers import ReadableHandler
 from bookie_parser.handlers import ViewableHandler
 
 
+
 application = tornado.web.Application([
-    (r"/", MainHandler),
-    (r"/readable/(.*)", ReadableHandler),
-    (r"/view/(.*)", ViewableHandler),
-])
+        (r"/", MainHandler),
+        (r"/readable/(.*)", ReadableHandler),
+        (r"/view/(.*)", ViewableHandler),
+        (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": STATIC_PATH}),
+    ],
+    static_path=STATIC_PATH,
+    template_path=TPL_PATH,
+    )
 
 
 def main(host='0.0.0.0', port=5000):
