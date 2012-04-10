@@ -39,7 +39,8 @@ lib/python*/site-packages/bookie_parser.egg-link:
 css: base.css
 
 base.css:
-	$(CSS) -o bookie_parser/static/base.css bookie_parser/static/base.scss
+	wget "https://bmark.us/static/css/readable.scss" -O bookie_parser/static/readable.scss
+	$(CSS) -I bookie_parser/static/ -o bookie_parser/static/base.css bookie_parser/static/base.scss
 
 
 .PHONY: run

@@ -85,6 +85,6 @@ class ViewableHandler(RequestHandler):
             LOG.error(str(exc))
             readable_title = 'Unknown'
         self.content_type = 'text/html'
-        self.write(readable_article)
-
-
+        self.render('readable.html',
+            content=readable_article,
+            title=readable_title)
