@@ -16,12 +16,12 @@ from bookie_parser.handlers import ReadableHandler
 from bookie_parser.handlers import ViewableHandler
 
 
-
 application = tornado.web.Application([
         (r"/", MainHandler),
         (r"/readable/(.*)", ReadableHandler),
         (r"/view/(.*)", ViewableHandler),
-        (r"/static/(.*)", tornado.web.StaticFileHandler, {"path": STATIC_PATH}),
+        (r"/static/(.*)", tornado.web.StaticFileHandler,
+            {"path": STATIC_PATH}),
     ],
     static_path=STATIC_PATH,
     template_path=TPL_PATH,

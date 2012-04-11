@@ -20,4 +20,6 @@ class TestMainHandler(AsyncHTTPTestCase, LogTrapTestCase):
         """Check the index loads template properly."""
         response = self.fetch("/")
         body = response.body
-        self.assertIn('Bookie', body, 'Must find Bookie in our body: ' + body)
+        self.assertIn('Bookie',
+            body,
+            'Must find Bookie in our body: ' + body)

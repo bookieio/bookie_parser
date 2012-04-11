@@ -21,7 +21,8 @@ class ReadableHandler(RequestHandler):
     @asynchronous
     def get(self, url):
         """Getting will fetch the content for the url."""
-        httpclient.AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
+        httpclient.AsyncHTTPClient.configure(
+            "tornado.curl_httpclient.CurlAsyncHTTPClient")
         http = httpclient.AsyncHTTPClient()
         try:
             http.fetch(url, self._on_download)
@@ -62,7 +63,8 @@ class ViewableHandler(RequestHandler):
     @asynchronous
     def get(self, url):
         """Getting will fetch the content for the url."""
-        httpclient.AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
+        httpclient.AsyncHTTPClient.configure(
+            "tornado.curl_httpclient.CurlAsyncHTTPClient")
         http = httpclient.AsyncHTTPClient()
         try:
             http.fetch(url, self._on_download)

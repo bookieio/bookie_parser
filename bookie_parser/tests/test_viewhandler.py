@@ -24,7 +24,8 @@ class TestReadableHandler(AsyncHTTPTestCase, LogTrapTestCase):
     def test_url_only(self):
         """Verify we fetch/process a given url"""
         headers = {'Accepts': 'application/json'}
-        test_url = urllib.quote_plus('http://google.com/intl/en/about/index.html')
+        test_url = urllib.quote_plus(
+            'http://google.com/intl/en/about/index.html')
         LOG.error(test_url)
         LOG.error("/view/" + test_url)
         response = self.fetch('/view/' + test_url,
