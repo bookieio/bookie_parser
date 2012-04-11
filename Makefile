@@ -8,6 +8,13 @@ NOSE := bin/nosetests
 GUNICORN := bin/gunicorn
 CSS := bin/pyscss
 
+# ###########
+# Tests rule!
+# ###########
+.PHONY: test
+test:
+	$(NOSE) --with-id -s -x bookie_parser/tests
+
 # #######
 # INSTALL
 # #######
