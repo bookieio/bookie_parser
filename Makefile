@@ -8,6 +8,10 @@ NOSE := bin/nosetests
 GUNICORN := bin/gunicorn
 CSS := bin/pyscss
 
+.PHONY: clean_all
+clean_all: clean_venv
+
+
 # ###########
 # Tests rule!
 # ###########
@@ -19,7 +23,7 @@ test:
 # INSTALL
 # #######
 .PHONY: all
-all: deps
+all: venv deps css
 
 .PHONY: deps
 deps: venv
@@ -48,7 +52,6 @@ css: base.css
 base.css:
 	wget "https://bmark.us/static/css/readable.scss" -O bookie_parser/static/readable.scss
 	$(CSS) -I bookie_parser/static/ -o bookie_parser/static/base.css bookie_parser/static/base.scss
-
 
 .PHONY: run
 run:

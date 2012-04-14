@@ -1,6 +1,9 @@
+coverage
+gunicorn
 lxml
+pep8
+pycurl
+pylint
+pyscss
 readability-lxml
 tornado
-gunicorn
-pycurl
-pyscss
