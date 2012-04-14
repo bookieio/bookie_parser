@@ -60,6 +60,7 @@ class ReadableHandler(RequestHandler):
 
 class ViewableHandler(RequestHandler):
     """I want to be readable parsed, but returned for viewing."""
+
     @asynchronous
     def get(self, url):
         """Getting will fetch the content for the url."""
@@ -75,7 +76,6 @@ class ViewableHandler(RequestHandler):
         """On downloading the url content, make sure we readable it."""
         LOG.info(response.request_time)
         self._readable_content(response.request.url, response.body)
-        self.finish()
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
