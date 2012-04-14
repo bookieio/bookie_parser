@@ -16,8 +16,11 @@ clean_all: clean_venv
 # Tests rule!
 # ###########
 .PHONY: test
-test:
+test: $(NOSE)
 	$(NOSE) --with-id -s -x bookie_parser/tests
+
+$(NOSE):
+	$(PIP) install nose pep8 coverage
 
 # #######
 # INSTALL
