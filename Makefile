@@ -8,25 +8,15 @@ NOSE := bin/nosetests
 GUNICORN := bin/gunicorn
 CSS := bin/pyscss
 
-.PHONY: clean_all
-clean_all: clean_venv
-
-
-# ###########
-# Tests rule!
-# ###########
-.PHONY: test
-test: $(NOSE)
-	$(NOSE) --with-id -s -x bookie_parser/tests
-
-$(NOSE):
-	$(PIP) install nose pep8 coverage
 
 # #######
 # INSTALL
 # #######
 .PHONY: all
 all: venv deps css
+
+.PHONY: clean_all
+clean_all: clean_venv
 
 .PHONY: deps
 deps: venv
@@ -47,6 +37,17 @@ lib/python*/site-packages/bookie_parser.egg-link:
 
 
 # ###########
+# Tests rule!
+# ###########
+.PHONY: test
+test: $(NOSE)
+	$(NOSE) --with-id -s -x bookie_parser/tests
+
+$(NOSE):
+	$(PIP) install nose pep8 coverage
+
+
+# ###########
 # Development
 # ###########
 .PHONY: css
@@ -54,6 +55,8 @@ css: base.css
 
 base.css:
 	wget "https://bmark.us/static/css/readable.scss" -O bookie_parser/static/readable.scss
+	wget "https://bmark.us/static/css/fontawesome.scss" -O bookie_parser/static/fontawesome.scss
+	wget "https://bmark.us/static/css/base.scss" -O bookie_parser/static/base.scss
 	$(CSS) -I bookie_parser/static/ -o bookie_parser/static/base.css bookie_parser/static/base.scss
 
 .PHONY: run

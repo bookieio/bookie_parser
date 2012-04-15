@@ -4,8 +4,18 @@
         <meta name="viewport" content="width=device-width" initial-scale="1.0">
         <title>Bookie Readable Parsing</title>
         <link rel="stylesheet" href="{{static_url('base.css')}}" type="text/css" media="screen" charset="utf-8">
+        <link
+            href='https://fonts.googleapis.com/css?family=Cabin|Cabin+Sketch:bold&v2'
+            rel='stylesheet' type='text/css'/>
     </head>
     <body>
+        <div id="heading" class="">
+            <div class="logo">
+                <a href="/" class="logo">Bookie</a>
+                <span class="alt_logo">&nbsp;&#45; bookmark your web</span>
+            </div>
+        </div>
+
         <p>Welcome to the Bookie Readable Parser. This site provides an api
         for parsing the content of a web page and providing a clear and
         readable version of it.</p>
@@ -18,11 +28,13 @@
 
         <h2>Bookmarklet</h2>
         <p>Drag this bookmarklet to your browser's bookmark bar and click on
-        it when viewing a site you want to read in a clean way.  <a
+        it when viewing a site you want to read in a clean way.</p>
+        <div>
+            <a
             title="View with Bookmark Parser" href="javascript:(function()
             {location.href='http://readable.bmark.us/view/'+encodeURIComponent(location.href)}())">Read
             with Bookie</a>
-        </p>
+        </div>
         <pre>javascript:(function() {location.href='https://readable.bmark.us/view/'+encodeURIComponent(location.href)}())</pre>
 
         <h2>API</h2>
