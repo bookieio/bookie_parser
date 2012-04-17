@@ -5,5 +5,5 @@ pep8
 pycurl
 pylint
 pyscss
--e git+http://github.com/mitechie/python-readability.git#egg=readability_lxml
+-e git+http://github.com/mitechie/python-readability.git@f1a79fb8f87b2f4b0df926e7d5c9cb8502f4344e#egg=readability_lxml
 tornado
