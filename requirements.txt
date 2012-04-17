@@ -5,5 +5,5 @@ pep8
 pycurl
 pylint
 pyscss
-readability-lxml
+readability_lxml==0.2.4
 tornado

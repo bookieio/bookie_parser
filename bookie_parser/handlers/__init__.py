@@ -37,8 +37,8 @@ class ReadableHandler(RequestHandler):
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
-        doc = Document(content)
-        readable_article = doc.summary()
+        doc = Document(content, url=url)
+        readable_article = doc.summary(document_only=True)
         try:
             readable_title = doc.short_title()
         except AttributeError, exc:
@@ -79,8 +79,8 @@ class ViewableHandler(RequestHandler):
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
-        doc = Document(content)
-        readable_article = doc.summary()
+        doc = Document(content, url=url)
+        readable_article = doc.summary(document_only=True)
         try:
             readable_title = doc.short_title()
         except AttributeError, exc:
