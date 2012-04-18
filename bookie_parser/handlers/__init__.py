@@ -87,7 +87,7 @@ class ViewableHandler(RequestHandler):
         LOG.info(response.request_time)
         LOG.info(response.body)
         LOG.info(response.request.url)
-        if response.cdoe == MAX_REDIRECT_ERROR:
+        if response.code == MAX_REDIRECT_ERROR:
             raise('MAX REDIRECTS HIT')
         else:
             self._readable_content(response.request.url, response.body)
