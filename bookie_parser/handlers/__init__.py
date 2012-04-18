@@ -2,7 +2,7 @@
 from tornado import httpclient
 from tornado.web import asynchronous
 from tornado.web import RequestHandler
-from readability.readability import Document
+from readability_lxml.readability import Document
 
 from bookie_parser.logconfig import LOG
 
