@@ -7,6 +7,10 @@ from readability_lxml.readability import Document
 from bookie_parser.logconfig import LOG
 
 
+MAX_REDIRECTS = 10
+MAX_REDIRECT_ERROR = 599
+
+
 class MainHandler(RequestHandler):
     """The main index handler."""
     def get(self):
@@ -25,14 +29,19 @@ class ReadableHandler(RequestHandler):
             "tornado.curl_httpclient.CurlAsyncHTTPClient")
         http = httpclient.AsyncHTTPClient()
         try:
-            http.fetch(url, self._on_download)
+            http.fetch(url, self._on_download, max_redirects=MAX_REDIRECTS)
         except httpclient.HTTPError, exc:
             LOG.error(e)
 
     def _on_download(self, response):
         """On downloading the url content, make sure we readable it."""
         LOG.info(response.request_time)
-        self._readable_content(response.request.url, response.body)
+
+        if response.cdoe == MAX_REDIRECT_ERROR:
+            raise('MAX REDIRECTS HIT')
+        else:
+            self._readable_content(response.request.url, response.body)
+
         self.finish()
 
     def _readable_content(self, url, content):
@@ -68,7 +77,7 @@ class ViewableHandler(RequestHandler):
             "tornado.curl_httpclient.CurlAsyncHTTPClient")
         http = httpclient.AsyncHTTPClient()
         try:
-            http.fetch(url, self._on_download)
+            http.fetch(url, self._on_download, max_redirects=MAX_REDIRECTS)
         except httpclient.HTTPError, exc:
             LOG.error(e)
 
@@ -77,8 +86,11 @@ class ViewableHandler(RequestHandler):
         LOG.info(response)
         LOG.info(response.request_time)
         LOG.info(response.body)
-        LOG.info(reqponse.request.url)
-        self._readable_content(response.request.url, response.body)
+        LOG.info(response.request.url)
+        if response.cdoe == MAX_REDIRECT_ERROR:
+            raise('MAX REDIRECTS HIT')
+        else:
+            self._readable_content(response.request.url, response.body)
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
