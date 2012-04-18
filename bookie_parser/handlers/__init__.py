@@ -74,7 +74,10 @@ class ViewableHandler(RequestHandler):
 
     def _on_download(self, response):
         """On downloading the url content, make sure we readable it."""
+        LOG.info(response)
         LOG.info(response.request_time)
+        LOG.info(response.body)
+        LOG.info(reqponse.request.url)
         self._readable_content(response.request.url, response.body)
 
     def _readable_content(self, url, content):
