@@ -43,6 +43,7 @@ setup(name='bookie_parser',
     zip_safe=False,
     install_requires=install_requires,
     tests_require=tests_require,
+    extras_require={'test': tests_require},
     entry_points={
         'console_scripts':
             ['bookie_parser=bookie_parser:main']
