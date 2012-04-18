@@ -79,6 +79,7 @@ class ViewableHandler(RequestHandler):
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
+        LOG.info(type(content))
         doc = Document(content, url=url)
         readable_article = doc.summary(enclose_with_html_tag=False)
         try:
