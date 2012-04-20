@@ -1,6 +1,7 @@
 """Tornado request handlers for our application."""
 from tornado import httpclient
 from tornado.web import asynchronous
+from tornado.web import HTTPError
 from tornado.web import RequestHandler
 from readability_lxml.readability import Document
 
@@ -37,7 +38,7 @@ class ReadableHandler(RequestHandler):
         """On downloading the url content, make sure we readable it."""
         LOG.info(response.request_time)
 
-        if response.cdoe == MAX_REDIRECT_ERROR:
+        if response.code == MAX_REDIRECT_ERROR:
             raise('MAX REDIRECTS HIT')
         else:
             self._readable_content(response.request.url, response.body)
@@ -81,14 +82,36 @@ class ViewableHandler(RequestHandler):
         except httpclient.HTTPError, exc:
             LOG.error(e)
 
+    @asynchronous
+    def post(self):
+        """Getting will fetch the content for the url."""
+        httpclient.AsyncHTTPClient.configure(
+            "tornado.curl_httpclient.CurlAsyncHTTPClient")
+        http = httpclient.AsyncHTTPClient()
+        url = self.get_argument('url')
+        LOG.error(url)
+
+        if not url:
+            raise HTTPError(404)
+
+        try:
+            http.fetch(url, self._on_download, max_redirects=MAX_REDIRECTS)
+        except httpclient.HTTPError, exc:
+            LOG.error(e)
+
+
     def _on_download(self, response):
         """On downloading the url content, make sure we readable it."""
         LOG.info(response)
         LOG.info(response.request_time)
         LOG.info(response.body)
         LOG.info(response.request.url)
-        if response.code == MAX_REDIRECT_ERROR:
-            raise('MAX REDIRECTS HIT')
+
+        if response.code == 599:
+            LOG.error(response.error.code)
+            LOG.error(response.error.message)
+            LOG.error(response.error.response)
+            raise response.error
         else:
             self._readable_content(response.request.url, response.body)
 

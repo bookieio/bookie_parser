@@ -26,6 +26,14 @@
         to help aid in selecting tags and other bits of metadata about the
         content.</p>
 
+        <h2>Try it out</h2>
+        <form action="/view" method="POST" class="form">
+            <div>
+                <input type="text" name="url" placeholder="Enter Url..." />
+                <input type="submit" value="Read It" name="submit" />
+            </div>
+        </form>
+
         <h2>Bookmarklet</h2>
         <p>Drag this bookmarklet to your browser's bookmark bar and click on
         it when viewing a site you want to read in a clean way.</p>
@@ -41,41 +49,41 @@
         <p>Example calls are shows using the <a href="">HTTPie</a> Python
         tool. It really makes testing out api calls and such a lot easer.</p>
 
-<h3>Posting Content</h3>
-<pre>$ http -f POST "http://readable.bmark.us/readable/google.com" content="&lt;h1&gt;Hello world&lt;h1&gt;</pre>
-<pre>
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=UTF-8
-Server: TornadoServer/2.2 (Gunicorn/0.14.2)
-Content-Length: 115
-Connection: keep-alive
+        <h3>Posting Content</h3>
+        <pre>$ http -f POST "http://readable.bmark.us/readable/google.com" content="&lt;h1&gt;Hello world&lt;h1&gt;</pre>
+        <pre>
+        HTTP/1.1 200 OK
+        Content-Type: application/json; charset=UTF-8
+        Server: TornadoServer/2.2 (Gunicorn/0.14.2)
+        Content-Length: 115
+        Connection: keep-alive
 
-{
-    "readable": "&lt;body id=\"readabilityBody\"&gt;&lt;h1&gt;Hello world&lt;/h1&gt;&lt;/body&gt;",
-    "title": "Unknown",
-    "url": "google.com"
-}
-</pre>
+        {
+            "readable": "&lt;body id=\"readabilityBody\"&gt;&lt;h1&gt;Hello world&lt;/h1&gt;&lt;/body&gt;",
+            "title": "Unknown",
+            "url": "google.com"
+        }
+        </pre>
 
-<h3>Fetching URL Content</h3>
-<pre>$ http -f GET "http://readable.bmark.us/readable/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
-<pre>
+        <h3>Fetching URL Content</h3>
+        <pre>$ http -f GET "http://readable.bmark.us/readable/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
+        <pre>
 
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=UTF-8
-Etag: "d9eb34be9c858960e266571168419466ce423dba"
-Server: TornadoServer/2.2 (Gunicorn/0.14.2)
-Content-Length: 4812
-Connection: keep-alive
+        HTTP/1.1 200 OK
+        Content-Type: application/json; charset=UTF-8
+        Etag: "d9eb34be9c858960e266571168419466ce423dba"
+        Server: TornadoServer/2.2 (Gunicorn/0.14.2)
+        Content-Length: 4812
+        Connection: keep-alive
 
-{
-    "readable": "&lt;html&gt;&lt;body/&gt;&lt;div id=\"content\"&gt;...&lt;/div&gt;\n&lt;/html&gt;",
-    "title": "Tornado Web Server",
-    "url": "tornadoweb.org/documentation/httpclient.html#tornado.httpclient.AsyncHTTPClient.configure"
-}
-</pre>
+        {
+            "readable": "&lt;html&gt;&lt;body/&gt;&lt;div id=\"content\"&gt;...&lt;/div&gt;\n&lt;/html&gt;",
+            "title": "Tornado Web Server",
+            "url": "tornadoweb.org/documentation/httpclient.html#tornado.httpclient.AsyncHTTPClient.configure"
+        }
+        </pre>
 
-<h3>Viewing URL Content</h3>
-<pre>$ http -f GET "http://readable.bmark.us/view/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
+        <h3>Viewing URL Content</h3>
+        <pre>$ http -f GET "http://readable.bmark.us/view/tornadoweb.org%2Fdocumentation%2Fhttpclient.html%23tornado.httpclient.AsyncHTTPClient.configure"</pre>
     </body>
 </html>

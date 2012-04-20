@@ -20,6 +20,7 @@ application = tornado.web.Application([
         (r"/", MainHandler),
         (r"/readable/(.*)", ReadableHandler),
         (r"/view/(.*)", ViewableHandler),
+        (r"/view", ViewableHandler),
         (r"/static/(.*)", tornado.web.StaticFileHandler,
             {"path": STATIC_PATH}),
     ],
