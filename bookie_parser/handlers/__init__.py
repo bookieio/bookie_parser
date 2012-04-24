@@ -4,6 +4,7 @@ from tornado.web import asynchronous
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
 from readability_lxml.readability import Document
+from urlparse import urlparse
 
 from bookie_parser.logconfig import LOG
 
@@ -47,19 +48,23 @@ class ReadableHandler(RequestHandler):
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
+        self.content_type = 'application/json'
+
         doc = Document(content, url=url)
         readable_article = doc.summary(enclose_with_html_tag=False)
+
         try:
-            readable_title = doc.short_title()
+            readable_title = doc.title()
         except AttributeError, exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
         resp = {
             'url': url,
+            'domain': urlparse(url).netloc,
             'readable': readable_article,
+            'short_title': doc.short_title(),
             'title': readable_title,
         }
-        self.content_type = 'application/json'
         self.write(resp)
 
     def post(self, url):
@@ -109,7 +114,7 @@ class ViewableHandler(RequestHandler):
 
         if response.code == 599:
             LOG.error(response.error.code)
-            LOG.error(response.error.message)
+            LOG.error(response.error.message)()
             LOG.error(response.error.response)
             raise response.error
         else:
@@ -117,15 +122,20 @@ class ViewableHandler(RequestHandler):
 
     def _readable_content(self, url, content):
         """Shared helper to process and respond with the content."""
+        self.content_type = 'text/html'
+
         LOG.info(type(content))
         doc = Document(content, url=url)
         readable_article = doc.summary(enclose_with_html_tag=False)
         try:
-            readable_title = doc.short_title()
+            readable_title = doc.title()
         except AttributeError, exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
-        self.content_type = 'text/html'
+
         self.render('readable.html',
             content=readable_article,
-            title=readable_title)
+            domain=urlparse(url).netloc,
+            short_title=doc.short_title(),
+            title=readable_title,
+            url=url)
