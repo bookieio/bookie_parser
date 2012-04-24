@@ -43,3 +43,13 @@ body {
     line-height: 1.8em;
     border-bottom: 2px solid #CCC;
 }
+
+#readable_data {
+    background-color: #333;
+    color: #CCC;
+    font-size: .7em;
+    margin: 0px;
+    margin-top: 1em;
+    padding: 1em 0px;
+    width: 100%;
+}

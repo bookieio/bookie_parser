@@ -42,11 +42,12 @@ class ReadableHandler(RequestHandler):
         if response.code == MAX_REDIRECT_ERROR:
             raise('MAX REDIRECTS HIT')
         else:
-            self._readable_content(response.request.url, response.body)
+            self._readable_content(response.request.url, response.body,
+                request_time=response.request_time)
 
         self.finish()
 
-    def _readable_content(self, url, content):
+    def _readable_content(self, url, content, request_time=None):
         """Shared helper to process and respond with the content."""
         self.content_type = 'application/json'
 
@@ -64,6 +65,7 @@ class ReadableHandler(RequestHandler):
             'readable': readable_article,
             'short_title': doc.short_title(),
             'title': readable_title,
+            'request_time': request_time,
         }
         self.write(resp)
 
@@ -118,9 +120,10 @@ class ViewableHandler(RequestHandler):
             LOG.error(response.error.response)
             raise response.error
         else:
-            self._readable_content(response.request.url, response.body)
+            self._readable_content(response.request.url, response.body,
+                request_time=response.request_time)
 
-    def _readable_content(self, url, content):
+    def _readable_content(self, url, content, request_time=None):
         """Shared helper to process and respond with the content."""
         self.content_type = 'text/html'
 
@@ -138,4 +141,6 @@ class ViewableHandler(RequestHandler):
             domain=urlparse(url).netloc,
             short_title=doc.short_title(),
             title=readable_title,
-            url=url)
+            url=url,
+            request_time=request_time,
+        )
