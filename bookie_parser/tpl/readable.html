@@ -19,8 +19,14 @@
         </div>
         <div id="readable_data">
             <ul>
-                <li>Url: {{url}}</li>
-                <li>Request Time: {{"{0:.3f}".format(request_time)}}s</li>
+                <li>
+                    <span class="data_label">Url:</span>
+                    <a href="{{url}}">{{url}}</a>
+                </li>
+                <li>
+                    <span class="data_label">Request Time:</span>
+                    {{"{0:.3f}".format(request_time)}}s
+                </li>
             </ul>
         </div>
     </body>

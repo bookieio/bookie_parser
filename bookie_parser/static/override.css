@@ -53,3 +53,17 @@ body {
     padding: 1em 0px;
     width: 100%;
 }
+
+#readable_data li {
+    list-style-type: none;
+}
+
+#readable_data .data_label {
+    font-weight: bold;
+    color: #999;
+}
+
+#readable_data a {
+    color: #CCC;
+}
+
