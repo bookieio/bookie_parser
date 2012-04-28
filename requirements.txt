@@ -1,5 +1,6 @@
 coverage
 gunicorn
+httpcode
 lxml
 pep8
 pycurl

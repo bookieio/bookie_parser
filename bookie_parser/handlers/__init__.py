@@ -6,6 +6,7 @@ from tornado.web import RequestHandler
 from readability_lxml.readability import Document
 from urlparse import urlparse
 
+from bookie_parser.lib.readable import Readable
 from bookie_parser.logconfig import LOG
 
 
@@ -33,7 +34,7 @@ class ReadableHandler(RequestHandler):
         try:
             http.fetch(url, self._on_download, max_redirects=MAX_REDIRECTS)
         except httpclient.HTTPError, exc:
-            LOG.error(e)
+            LOG.error(exc)
 
     def _on_download(self, response):
         """On downloading the url content, make sure we readable it."""
@@ -42,16 +43,17 @@ class ReadableHandler(RequestHandler):
         if response.code == MAX_REDIRECT_ERROR:
             raise('MAX REDIRECTS HIT')
         else:
-            self._readable_content(response.request.url, response.body,
-                request_time=response.request_time)
+            readable = Readable(response)
+            self._readable_content(readable)
 
         self.finish()
 
-    def _readable_content(self, url, content, request_time=None):
+    def _readable_content(self, readable_response):
         """Shared helper to process and respond with the content."""
         self.content_type = 'application/json'
 
-        doc = Document(content, url=url)
+        doc = Document(readable_response.content,
+                url=readable_response.url)
         readable_article = doc.summary(enclose_with_html_tag=False)
 
         try:
@@ -60,12 +62,17 @@ class ReadableHandler(RequestHandler):
             LOG.error(str(exc))
             readable_title = 'Unknown'
         resp = {
-            'url': url,
-            'domain': urlparse(url).netloc,
-            'readable': readable_article,
+            'url': readable_response.url,
+            'content_type': readable_response.content_type,
+            'domain': readable_response.url,
+            'headers': readable_response.headers,
+            'is_error': readable_response.is_error,
+            'content': readable_article,
             'short_title': doc.short_title(),
+            'status_code': readable_response.status_code,
+            'status_message': readable_response.status_message,
             'title': readable_title,
-            'request_time': request_time,
+            'request_time': readable_response.request_time,
         }
         self.write(resp)
 

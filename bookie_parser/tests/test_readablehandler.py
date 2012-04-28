@@ -5,11 +5,8 @@ import urllib
 
 from tornado.testing import AsyncHTTPTestCase
 from tornado.testing import LogTrapTestCase
-from tornado.web import RequestHandler
-from tornado.web import Application
 
 from bookie_parser import application
-from bookie_parser.handlers import MainHandler
 
 
 LOG = logging.getLogger()
@@ -35,5 +32,31 @@ class TestReadableHandler(AsyncHTTPTestCase, LogTrapTestCase):
         body = response.body
         resp = json.loads(body)
 
-        self.assertIn("google.com", resp['readable'],
+        self.assertIn("google.com", resp['content'],
             'We should find google in the readable response. ' + body)
+
+    def test_response_keys(self):
+        """We expect to get a certain list of keys in our response"""
+        mandated_keys = [
+            'domain',
+            'url',
+            'is_error',
+            'content',
+            'content_type',
+            'headers',
+            'request_time',
+            'short_title',
+            'status_message',
+            'status_code',
+            'title',
+        ]
+
+        headers = {'Accepts': 'application/json'}
+        test_url = urllib.quote_plus(
+            'http://google.com/intl/en/about/index.html')
+        response = self.fetch('/readable/' + test_url,
+            method='GET',
+            headers=headers)
+        data = json.loads(response.body)
+        for key in mandated_keys:
+            self.assertIn(key, data.keys())
