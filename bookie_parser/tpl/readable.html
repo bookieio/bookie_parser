@@ -10,7 +10,8 @@
         <div class="readable">
             <div id="readable_content">
                 <div class="heading">
-                    <img class="favicon" alt="favicon" src="http://s2.googleusercontent.com/s2/favicons?domain={{domain}}" />
+                    <img class="favicon" alt="favicon"
+                    src="http://s2.googleusercontent.com/s2/favicons?domain={{readable.domain}}" />
                     {{title}}
                 </div>
                 {% autoescape None %}
@@ -21,11 +22,11 @@
             <ul>
                 <li>
                     <span class="data_label">Url:</span>
-                    <a href="{{url}}">{{url}}</a>
+                    <a href="{{readable.url}}">{{readable.url}}</a>
                 </li>
                 <li>
                     <span class="data_label">Request Time:</span>
-                    {{"{0:.3f}".format(request_time)}}s
+                    {{"{0:.3f}".format(readable.request_time)}}s
                 </li>
             </ul>
         </div>

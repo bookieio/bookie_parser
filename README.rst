@@ -18,3 +18,22 @@ I'd like to test this out by deploying to the Heroku cedar stack if possible,
 so you might see some odd bits of things I have to add to make that work.
 
 
+Installtion
+------------
+::
+
+    $ sudo apt-get install python-dev librtmp-dev
+    $ git clone git://github.com/mitechie/bookie_parser.git
+    $ cd bookie_parser
+    $ make
+
+
+Running
+--------
+We use a local gunicorn server to server out the application. You can start
+the server with
+
+::
+
+    $ make run
+    $ make stop
