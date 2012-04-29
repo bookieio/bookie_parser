@@ -37,3 +37,13 @@ the server with
 
     $ make run
     $ make stop
+
+
+Build Server
+-------------
+We build on both a `jenkins install`_ with the rest of Bookie, but we're also
+tinkering with using `TravisCI`_
+
+
+.. _jenkins install: http://build.bmark.us
+.. _TravisCI: http://travis-ci.org/#!/mitechie/bookie_parser
