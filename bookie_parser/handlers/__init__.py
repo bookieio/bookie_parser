@@ -59,6 +59,7 @@ class ReadableHandler(RequestHandler):
     def _readable_content(self, readable_response):
         """Shared helper to process and respond with the content."""
         self.content_type = 'application/json'
+        self.add_header('Access-Control-Allow-Origin', '*')
 
         doc = Document(readable_response.content,
                 url=readable_response.url)
