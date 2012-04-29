@@ -105,7 +105,7 @@ class ViewableHandler(RequestHandler):
     """I want to be readable parsed, but returned for viewing."""
 
     @asynchronous
-    def get(self):
+    def get(self, url):
         """Getting will fetch the content for the url."""
         _fetch_url(url, self._on_download)
 
