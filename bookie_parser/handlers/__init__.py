@@ -59,7 +59,6 @@ class ReadableHandler(RequestHandler):
     def _readable_content(self, readable_response):
         """Shared helper to process and respond with the content."""
         self.content_type = 'application/json'
-        self.add_header('Access-Control-Allow-Origin', '*')
 
         doc = Document(readable_response.content,
                 url=readable_response.url)
@@ -91,12 +90,20 @@ class ReadableHandler(RequestHandler):
         content = self.get_argument('content')
         self._readable_content(url, content)
 
+    def options(self, *args, **kwargs):
+        LOG.debug(args)
+        LOG.debug(kwargs)
+        self.add_header('Access-Control-Allow-Origin', '*')
+        self.add_header('Access-Control-Allow-Headers', 'X-REQUESTED-WITH')
+        self.add_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.finish()
+
 
 class ViewableHandler(RequestHandler):
     """I want to be readable parsed, but returned for viewing."""
 
     @asynchronous
-    def get(self, url):
+    def get(self):
         """Getting will fetch the content for the url."""
         _fetch_url(url, self._on_download)
 
