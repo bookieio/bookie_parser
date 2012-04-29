@@ -20,7 +20,6 @@ from urlparse import urlparse
 class Readable(object):
     """Readable response object."""
     status_code = None
-    is_error = False
     content = ""
     content_type = ""
     headers = {}
@@ -46,7 +45,9 @@ class Readable(object):
 
     @property
     def is_error(self):
-        return self._check_error(self.status_code)
+        """Verify our status code is an error/not."""
+        # simple first check, if it's not a 2xx, then it's an error
+        return False if str(self.status_code).startswith('2') else False
 
     @property
     def status_message(self):
@@ -54,8 +55,3 @@ class Readable(object):
         # This is a tuple of short message, long message. We only care for the
         # short version.
         return STATUS_CODES[self.status_code][0]
-
-    def _check_error(self, status_code):
-        """Verify our status code is an error/not."""
-        # simple first check, if it's not a 2xx, then it's an error
-        return False if str(status_code).startswith('2') else False
