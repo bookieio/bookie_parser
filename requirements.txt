@@ -1,3 +1,4 @@
+breadability
 coverage
 gunicorn
 httpcode
@@ -6,5 +7,4 @@ pep8
 pycurl
 pylint
 pyscss
--e git+http://github.com/mitechie/python-readability.git@08660f6f0ca2e2be2bce31b3287513aa5e67245c#egg=readability_lxml
 tornado

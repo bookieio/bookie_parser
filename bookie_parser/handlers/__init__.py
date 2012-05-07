@@ -3,7 +3,7 @@ from tornado import httpclient
 from tornado.web import asynchronous
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
-from readability_lxml.readability import Document
+from breadability.readable import Article
 
 from bookie_parser.lib.readable import Readable
 from bookie_parser.logconfig import LOG
@@ -62,12 +62,12 @@ class ReadableHandler(RequestHandler):
         # allow cross domain requests: xdr
         self.add_header('Access-Control-Allow-Origin', '*')
 
-        doc = Document(readable_response.content,
+        doc = Article(readable_response.content,
                 url=readable_response.url)
-        readable_article = doc.summary(enclose_with_html_tag=False)
+        readable_article = unicode(doc)
 
         try:
-            readable_title = doc.title()
+            readable_title = doc.orig.title
         except AttributeError, exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
@@ -78,7 +78,6 @@ class ReadableHandler(RequestHandler):
             'headers': readable_response.headers,
             'is_error': readable_response.is_error,
             'content': readable_article,
-            'short_title': doc.short_title(),
             'status_code': readable_response.status_code,
             'status_message': readable_response.status_message,
             'title': readable_title,
@@ -128,10 +127,10 @@ class ViewableHandler(RequestHandler):
         """Shared helper to process and respond with the content."""
         self.content_type = 'text/html'
 
-        doc = Document(readable.content, url=readable.url)
-        readable_article = doc.summary(enclose_with_html_tag=False)
+        doc = Article(readable.content, url=readable.url)
+        readable_article = unicode(doc)
         try:
-            readable_title = doc.title()
+            readable_title = doc.orig.title
         except AttributeError, exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
@@ -139,6 +138,5 @@ class ViewableHandler(RequestHandler):
         self.render('readable.html',
             readable=readable,
             content=readable_article,
-            short_title=doc.short_title(),
             title=readable_title,
         )
