@@ -45,7 +45,6 @@ class TestReadableHandler(AsyncHTTPTestCase, LogTrapTestCase):
             'content_type',
             'headers',
             'request_time',
-            'short_title',
             'status_message',
             'status_code',
             'title',
