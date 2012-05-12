@@ -64,7 +64,7 @@ class ReadableHandler(RequestHandler):
 
         doc = Article(readable_response.content,
                 url=readable_response.url)
-        readable_article = unicode(doc)
+        readable_article = doc.readable
 
         try:
             readable_title = doc.orig.title
@@ -128,7 +128,7 @@ class ViewableHandler(RequestHandler):
         self.content_type = 'text/html'
 
         doc = Article(readable.content, url=readable.url)
-        readable_article = unicode(doc)
+        readable_article = doc.readable
         try:
             readable_title = doc.orig.title
         except AttributeError, exc:
