@@ -6,6 +6,13 @@
 News
 ====
 
+0.1.1
+-----
+
+* Released: Jun 15th 2012
+
+* Updated to breadable 0.1.3
+
 0.1
 ---
 
