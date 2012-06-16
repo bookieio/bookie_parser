@@ -32,7 +32,7 @@ class TestReadableHandler(AsyncHTTPTestCase, LogTrapTestCase):
         body = response.body
         resp = json.loads(body)
 
-        self.assertIn("google.com", resp['content'],
+        self.assertIn("organize the world", resp['content'],
             'We should find google in the readable response. ' + body)
 
     def test_response_keys(self):
