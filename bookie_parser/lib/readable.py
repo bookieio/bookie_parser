@@ -41,7 +41,7 @@ class Readable(object):
     @property
     def domain(self):
         """What is the root domain of the request we did."""
-        return urlparse(self.url).netloc,
+        return urlparse(self.url).netloc
 
     @property
     def is_error(self):
