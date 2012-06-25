@@ -37,5 +37,5 @@ class TestReadableResponse(TestCase):
         self.assertTrue(hasattr(r, 'content'))
         self.assertTrue(r.content.startswith('<html>'))
         self.assertTrue('OK', r.status_message)
-        self.assertEqual(('google.com',), r.domain)
+        self.assertEqual('google.com', r.domain)
         self.assertEqual(None, r.request_time)
