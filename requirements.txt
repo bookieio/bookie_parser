@@ -1,4 +1,4 @@
-breadability==0.1.6
+breadability==0.1.7
 coverage
 gunicorn
 httpcode
