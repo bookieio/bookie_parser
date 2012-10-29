@@ -1,0 +1,68 @@
+/**
+ * Testing ground of css before porting back to the Bookie main styles
+ *
+ */
+body {
+    background:
+
+      /* Brings FF to its knees with buggyness */
+      /* -moz-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px, */
+      /* -moz-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px, */
+      /* -moz-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px, */
+      /* -moz-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px, */
+      /* -moz-linear-gradient(0deg, #1b1b1b 10px, transparent 10px), */
+      /* -moz-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424); */
+
+      -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+      -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
+      -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
+      -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
+      -webkit-linear-gradient(0deg, #1b1b1b 10px, transparent 10px),
+      -webkit-linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+
+    background-color: #131313;
+    background-size: 5px 5px;
+}
+
+#readable_content {
+    line-height: 1.5em;
+    background: #FFF;
+}
+
+#readable_content h1 {
+    font-size: 1.5em;
+    line-height: 1.8em;
+}
+
+#readable_content a {
+    color: #900;
+}
+
+#readable_content .heading {
+    font-size: 1.5em;
+    line-height: 1.8em;
+    border-bottom: 2px solid #CCC;
+}
+
+#readable_data {
+    background-color: #333;
+    color: #CCC;
+    font-size: .7em;
+    margin: 0px;
+    margin-top: 1em;
+    padding: 1em 0px;
+    width: 100%;
+}
+
+#readable_data li {
+    list-style-type: none;
+}
+
+#readable_data .data_label {
+    font-weight: bold;
+    color: #999;
+}
+
+#readable_data a {
+    color: #CCC;
+}

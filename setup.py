@@ -9,11 +9,18 @@ NEWS = open(os.path.join(here, 'NEWS.txt')).read()
 version = '0.3'
 
 install_requires = [
-    'lxml',
     'breadability',
+    'fakeredis',
+    'gevent',
+    'gunicorn',
+    'httpcode',
+    'lxml',
     'Mako',
-    'pyramid==1.4a3'
-    'pryamid_debugtoolbar',
+    'pyramid==1.4a3',
+    'python-dateutil',
+    'pytz',
+    'redis',
+    'requests',
     'waitress',
 ]
 
@@ -41,8 +48,7 @@ setup(
     author_email='rharding@mitechie.com',
     url='docs.bmark.us',
     license='BSD',
-    packages=find_packages('bookie_parser'),
-    package_dir={'': 'bookie_parser'},
+    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
@@ -51,7 +57,5 @@ setup(
     entry_points="""\
     [paste.app_factory]
     main = bookie_parser:main
-    [console_scripts]
-    bookie_parser=bookie_parser:main
     """
 )

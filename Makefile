@@ -44,7 +44,7 @@ test: $(NOSE)
 	$(NOSE) --with-id -s -x bookie_parser/tests
 
 $(NOSE):
-	$(PIP) install nose pep8 coverage
+	$(PIP) install nose pep8 coverage 
 
 
 # ###########
@@ -61,12 +61,20 @@ base.css:
 
 .PHONY: run
 run:
-	gunicorn -k tornado -p app.pid bookie_parser &
+	pserve development.ini
 
 .PHONY: stop
 stop:
 	kill -9 `cat app.pid` || true
 	rm app.pid || true
+
+
+.PHONY: lint
+lint: bin/flake8
+	flake8 bookie_parser
+
+bin/flake8:
+	$(PIP) install flake8
 
 
 # ###############
