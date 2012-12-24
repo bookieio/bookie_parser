@@ -130,15 +130,12 @@ class TestApi(WebTestBase):
             params={
                 'url': url
             },
-            status=302)
+            extra_environ={
+                'HTTP_ORIGIN': '127.0.0.1'
+            },
+            status=200)
 
         # follow the redirect and we land at the actual page.
-        resp = resp.follow()
         body = json.loads(resp.body)
-
-        self.assertTrue(
-            resp.request.url.endswith(hashed),
-            'the url should end with the url hash')
-
         self.assertIn('data', body)
         self.assertIn('readable', body)

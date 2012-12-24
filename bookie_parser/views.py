@@ -93,12 +93,8 @@ def api_parse(request):
 
         if not read.is_error:
             page = WebPageMgr.store_request(read)
-            return HTTPFound(
-                headers={
-                    'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': request.environ['HTTP_ORIGIN'],
-                },
-                location=request.route_url('api_hash', hash_id=page.hash_id))
+            request.matchdict['hash_id'] = page.hash_id
+            return api_hash(request)
         else:
             LOG.error('url_is_error,' + url)
             request.response.status_int = 500
