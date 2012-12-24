@@ -1,1 +1,1 @@
-web: gunicorn -k gevent --workers=3 --max-requests=250 wsgi
+web: gunicorn -k gevent --bind=$HOST:$PORT --workers=3 --max-requests=250 wsgi
