@@ -2,7 +2,9 @@ import logging
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.httpexceptions import HTTPNotFound
+from pyramid.response import Response
 from pyramid.view import view_config
+
 
 from bookie_parser.lib.readable import ReadableRequest
 from bookie_parser.models import WebPageMgr
@@ -40,7 +42,7 @@ def api_hash(request):
 
     request.response.headers['Content-Type'] = 'application/json'
     # allow cross domain requests: xdr
-    request.response.headers['Access-Control-Allow-Origin'] = '*'
+    request.response.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
 
     return {
         'data': dict(page),
@@ -48,10 +50,21 @@ def api_hash(request):
     }
 
 
+@view_config(route_name='api_parser_options')
+def api_parser_options(request):
+      request.response.headers = {}
+      request.response.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
+      request.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+      request.response.headers['Access-Control-Max-Age'] = '1000'
+      request.response.headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type'
+      return request.response
+
+
 @view_config(route_name='api_parser', renderer='json')
 def api_parse(request):
     """Api to parse a url POST'd"""
     url = request.params.get('url', None)
+    request.response.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
 
     if not url:
         params = request.json_body
@@ -71,12 +84,8 @@ def api_parse(request):
     exists = WebPageMgr.exists(url=url)
     if exists:
         LOG.debug('Exists: ...forwarding')
-        return HTTPFound(
-            headers={
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-            location=request.route_url('api_hash', hash_id=exists))
+        request.matchdict['hash_id'] = exists
+        return api_hash(request)
     else:
         LOG.debug('Does not Exist: ...fetching')
         read = ReadableRequest(url)
@@ -87,7 +96,7 @@ def api_parse(request):
             return HTTPFound(
                 headers={
                     'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Origin': request.environ['HTTP_ORIGIN'],
                 },
                 location=request.route_url('api_hash', hash_id=page.hash_id))
         else:
