@@ -38,6 +38,10 @@ def api_hash(request):
         LOG.debug('notfound: ' + hash_id)
         return HTTPNotFound()
 
+    request.response.headers['Content-Type'] = 'application/json'
+    # allow cross domain requests: xdr
+    request.response.headers['Access-Control-Allow-Origin'] = '*'
+
     return {
         'data': dict(page),
         'readable': page.readable,
@@ -70,6 +74,7 @@ def api_parse(request):
         return HTTPFound(
             headers={
                 'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
             },
             location=request.route_url('api_hash', hash_id=exists))
     else:
@@ -82,6 +87,7 @@ def api_parse(request):
             return HTTPFound(
                 headers={
                     'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                 },
                 location=request.route_url('api_hash', hash_id=page.hash_id))
         else:
