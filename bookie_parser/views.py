@@ -1,8 +1,8 @@
+import json
 import logging
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.httpexceptions import HTTPNotFound
-from pyramid.response import Response
 from pyramid.view import view_config
 
 
@@ -40,9 +40,11 @@ def api_hash(request):
         LOG.debug('notfound: ' + hash_id)
         return HTTPNotFound()
 
-    request.response.headers['Content-Type'] = 'application/json'
+    resp = request.response
+    environ = request.environ
+    resp.headers['Content-Type'] = 'application/json'
     # allow cross domain requests: xdr
-    request.response.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
+    resp.headers['Access-Control-Allow-Origin'] = environ['HTTP_ORIGIN']
 
     return {
         'data': dict(page),
@@ -52,19 +54,26 @@ def api_hash(request):
 
 @view_config(route_name='api_parser_options')
 def api_parser_options(request):
-      request.response.headers = {}
-      request.response.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
-      request.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      request.response.headers['Access-Control-Max-Age'] = '1000'
-      request.response.headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type'
-      return request.response
+    resp = request.response
+    environ = request.environ
+    resp.headers = {}
+    resp.headers['Access-Control-Allow-Origin'] = environ['HTTP_ORIGIN']
+    resp.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    resp.headers['Access-Control-Max-Age'] = '1000'
+    resp.headers['Access-Control-Allow-Headers'] = (
+        '*'
+        ',x-requested-with,Content-Type')
+    return request.response
 
 
 @view_config(route_name='api_parser', renderer='json')
 def api_parse(request):
     """Api to parse a url POST'd"""
     url = request.params.get('url', None)
-    request.response.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
+
+    resp = request.response
+    environ = request.environ
+    resp.headers['Access-Control-Allow-Origin'] = environ['HTTP_ORIGIN']
 
     if not url:
         params = request.json_body
@@ -208,3 +217,14 @@ def url(request):
         }
     else:
         return HTTPNotFound()
+
+
+@view_config(route_name='redis_list', renderer='redis_list.mako')
+def redis_list(request):
+    """List out the items in redis."""
+    from bookie_parser.models import server
+    urls = server.keys('*')
+    return {
+        'urls': [json.loads(server.get(hash_id)) for hash_id in urls],
+    }
+

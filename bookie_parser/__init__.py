@@ -23,11 +23,14 @@ def main(global_config, **settings):
 
     # Start an api end point we should be using that allows us options to
     # gather extra data.
-    config.add_route('api_parser_options',
+    config.add_route(
+        'api_parser_options',
         '/api/v1/parse',
         request_method="OPTIONS")
     config.add_route('api_parser', '/api/v1/parse', request_method="POST")
     config.add_route('api_hash', '/api/v1/{hash_id}')
+
+    config.add_route('redis_list', '/redis/list')
 
     config.scan()
     return config.make_wsgi_app()

@@ -12,7 +12,7 @@ class WebTestBase(unittest.TestCase):
         # Set up the fake redis server instance.
         bookie_parser.models.server = fakeredis.FakeRedis()
         from bookie_parser import main
-        app = main({})
+        app = main({}, google_analytics='123')
         self.app = TestApp(app)
 
     def tearDown(self):

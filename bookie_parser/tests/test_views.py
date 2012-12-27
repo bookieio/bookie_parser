@@ -124,7 +124,6 @@ class TestApi(WebTestBase):
     def test_api_call(self):
         """Calling the parse api with a url gets you all the data."""
         url = 'http://www.google.com/intl/en/about/index.html'
-        hashed = generate_hash(url)
         resp = self.app.post(
             '/api/v1/parse',
             params={
