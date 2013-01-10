@@ -5,15 +5,16 @@
         <meta name="viewport" content="width=device-width" initial-scale="1.0">
         <title>Bookie: ${webpage.title}</title>
         <link rel="stylesheet"
-            href="${request.static_url('bookie_parser:static/base.css')}"
+            href="${request.static_url('bookie_parser:static/grid.css')}"
             type="text/css" media="screen" charset="utf-8">
         <link rel="stylesheet"
-            href="${request.static_url('bookie_parser:static/override.css')}"
+            href="${request.static_url('bookie_parser:static/styles.css')}"
             type="text/css" media="screen" charset="utf-8">
     </head>
-    <body>
-        <div class="readable">
-            <div id="readable_content">
+    <body class="readable">
+        <div class="readable-container">
+        <article class="yui3-g-responsive">
+            <div id="readable_content" class="yui3-u-1">
                 <div class="heading">
                     <img class="favicon" alt="favicon"
                     src="http://s2.googleusercontent.com/s2/favicons?domain=${urlparse(webpage.url).netloc}" />
@@ -21,20 +22,22 @@
                 </div>
                 ${webpage.readable|n}
             </div>
-        </div>
-        <div id="readable_data">
-            <ul>
-                <li>
-                    <span class="data_label">Url:</span>
-                    <a href="${webpage.url}">${webpage.url}</a>
-                </li>
-                <li>
-                    <span class="data_label">Request Time:</span>
-                    ${"{0:.3f}".format(webpage.request['request_time'])}
-                </li>
-            </ul>
+            <div id="readable_data" class="yui3-u-1">
+                <ul>
+                    <li>
+                        <span class="data_label">Url:</span>
+                        <a href="${webpage.url}">${webpage.url}</a>
+                    </li>
+                    <li>
+                        <span class="data_label">Request Time:</span>
+                        ${"{0:.3f}".format(webpage.request['request_time'])}
+                    </li>
+                </ul>
+            </div>
+        </article>
         </div>
         <script type="text/javascript">
+
 
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', '${request.registry.settings['google_analytics']}']);
@@ -47,5 +50,6 @@
           })();
 
         </script>
+
     </body>
 </html>

@@ -5,6 +5,7 @@ PEP8 := bin/pep8
 PIP := bin/pip
 PIP_MIR = PIP_FIND_LINKS='http://mypi http://simple.crate.io/'
 NOSE := bin/nosetests
+PYSCSS := bin/pyscss
 GUNICORN := bin/gunicorn
 CSS := bin/pyscss
 
@@ -51,17 +52,25 @@ $(NOSE):
 # Development
 # ###########
 .PHONY: css
-css: base.css
+css: bookie_parser/static/styles.css
 
-base.css:
-	wget "https://bmark.us/static/css/readable.scss" -O bookie_parser/static/readable.scss
-	wget "https://bmark.us/static/css/fontawesome.scss" -O bookie_parser/static/fontawesome.scss
-	wget "https://bmark.us/static/css/base.scss" -O bookie_parser/static/base.scss
-	$(CSS) -I bookie_parser/static/ -o bookie_parser/static/base.css bookie_parser/static/base.scss
+bookie_parser/static/styles.css:
+	$(PYSCSS) -I bookie_parser/static/ -o bookie_parser/static/styles.css bookie_parser/static/styles.scss
+
+.PHONY: clean_css
+clean_css:
+	- rm bookie_parser/static/styles.css
 
 .PHONY: run
-run:
-	pserve development.ini
+run: run_css run_app
+
+.PHONY: run_css
+run_css:
+	$(PYSCSS) --watch bookie_parser/static &
+
+.PHONY: run_app
+run_app:
+	pserve --reload --monitor-restart development.ini
 
 .PHONY: stop
 stop:

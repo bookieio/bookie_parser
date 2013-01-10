@@ -11,12 +11,13 @@ PasteDeploy
 pep8
 pycurl
 pylint
-pyScss
 pyramid==1.4a3
 pyramid_debugtoolbar
+pyScss==1.1.3
 python-dateutil
 pytz
 redis
 requests
 waitress
+watchdog
 webtest
