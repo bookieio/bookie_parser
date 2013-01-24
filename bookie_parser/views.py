@@ -223,8 +223,19 @@ def url(request):
 def redis_list(request):
     """List out the items in redis."""
     from bookie_parser.models import server
-    urls = server.keys('*')
+    urls = {}
+    refs = []
+
+    for hash_id in server.keys('*'):
+        data = json.loads(server.get(hash_id))
+        if 'reference' in data:
+            refs.append(data['reference'])
+        else:
+            urls[data['hash_id']] = data
+
     return {
-        'urls': [json.loads(server.get(hash_id)) for hash_id in urls],
+        'count': len(refs) + len(urls.keys()),
+        'urls': urls,
+        'refs': refs,
     }
 

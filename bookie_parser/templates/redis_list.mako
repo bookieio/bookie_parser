@@ -1,9 +1,17 @@
-<ul>
-% for url in urls:
-    % if not 'reference' in url:
-        <li>${url.get('hash_id')}: ${url.get('url')}</li>
-    % else:
-        <li>Reference: ${url.get('reference')}</li>
-    % endif
+<dl>
+% for url in urls.values():
+    <dt id="${url.get('hash_id')}"> ${url.get('hash_id')}</dt>
+        <dd>
+            <a href="${url.get('url')}">${url.get('url')}</a>
+        </dd>
+    </dt>
 % endfor
-</ul>
+
+    <dt>References
+        % for ref in refs:
+            <dd>
+                <a href="#${ref}">${ref}</a>
+            </dd>
+        % endfor
+    </dt>
+</dl>
