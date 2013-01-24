@@ -1,3 +1,4 @@
+<h3>Count: ${count}</h3>
 <dl>
 % for url in urls.values():
     <dt id="${url.get('hash_id')}"> ${url.get('hash_id')}</dt>
