@@ -234,7 +234,6 @@ def redis_list(request):
             urls[data['hash_id']] = data
 
     return {
-        'count': len(refs) + len(urls.keys()),
         'urls': urls,
         'refs': refs,
     }
