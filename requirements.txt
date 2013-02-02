@@ -6,6 +6,7 @@ gunicorn
 httpcode
 lxml
 Mako
+newrelic
 Paste
 PasteDeploy
 pep8
