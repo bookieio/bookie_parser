@@ -48,6 +48,9 @@ class ReadableRequest(object):
         self.start_time = self.start_time.replace(tzinfo=pytz.utc)
 
         try:
+            parsed_url = urlparse(self.url)
+            if not parsed_url.scheme:
+                self.url = 'http://' + self.url
             response = requests.get(self.url)
             self.status_code = response.status_code
             self.content = response.text
