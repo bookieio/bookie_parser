@@ -1,10 +1,11 @@
 import json
 import logging
+import lxml
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.httpexceptions import HTTPNotFound
+from pyramid.renderers import render_to_response
 from pyramid.view import view_config
-
 
 from bookie_parser.lib.readable import ReadableRequest
 from bookie_parser.models import WebPageMgr
@@ -196,12 +197,17 @@ def view(request):
                 location=request.route_url('url', hash_id=page.hash_id))
         else:
             LOG.error('url_is_error,' + url)
-            readable_article = 'There was an error.'
-
-            return {
-                'data': page,
-                'readable': readable_article,
-            }
+            return render_to_response(
+                'error.mako', {
+                    'error_message': 'There was an error fetching the url.',
+                    'error_details': {
+                        'code': read.status_code,
+                    },
+                    'readable': read,
+                    'title': 'Processing Error',
+                },
+                request=request
+            )
 
 
 @view_config(route_name='url', renderer='readable.mako')
@@ -237,4 +243,3 @@ def redis_list(request):
         'urls': urls,
         'refs': refs,
     }
-
