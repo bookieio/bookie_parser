@@ -1,16 +1,6 @@
 <%inherit file="/wrapper.mako" />
 <%def name="title()">Bookie Readable Parsing</%def>
 
-<div id="heading" class="yui3-u-1">
-    <div class="logo">
-        <a href="/" class="logo">Bookie</a>
-        <span class="alt_logo">&nbsp;&#45; bookmark your web</span>
-    </div>
-    <a href="https://github.com/mitechie/bookie_parser">
-        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-    alt="Fork me on GitHub"></a>
-</div>
-
 <article id="" class="yui3-u-1-2">
     <p>Welcome to the Bookie Readable Parser. This site provides an api
     for parsing the content of a web page and providing a clear and
