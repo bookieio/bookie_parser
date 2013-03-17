@@ -21,4 +21,4 @@ redis
 requests
 waitress
 watchdog
-webtest
+WebTest

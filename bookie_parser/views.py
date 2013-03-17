@@ -1,6 +1,5 @@
 import json
 import logging
-import lxml
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.httpexceptions import HTTPNotFound

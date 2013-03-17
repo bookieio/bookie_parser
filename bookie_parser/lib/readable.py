@@ -24,6 +24,12 @@ from requests import ConnectionError
 from urlparse import urlparse
 
 
+USER_AGENT = 'Bookie Parser/{version} ({url})'.format(
+    url="https://github.com/mitechie/bookie_parser",
+    version='0.3.1'
+)
+
+
 def generate_hash(url_string):
     m = hashlib.sha256()
     m.update(url_string)
@@ -51,14 +57,19 @@ class ReadableRequest(object):
             parsed_url = urlparse(self.url)
             if not parsed_url.scheme:
                 self.url = 'http://' + self.url
-            response = requests.get(self.url)
+            response = requests.get(
+                self.url,
+                headers={
+                    'User-Agent': USER_AGENT
+                })
             self.status_code = response.status_code
             self.content = response.text
             self.content_type = response.headers['content-type']
             self.headers = response.headers
             self.final_url = response.url
             self.domain = urlparse(self.final_url).netloc
-            request_time = parser.parse(response.headers['date'])
+            request_time = parser.parse(response.headers['date']) \
+                if 'date' in response.headers else None
         except ConnectionError:
             # Set us up with a nice failure setup.
             self.status_code = 500
