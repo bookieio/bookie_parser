@@ -22,7 +22,7 @@ Installtion
 ------------
 ::
 
-    $ sudo apt-get install python-dev librtmp-dev
+    $ sudo apt-get install python-dev librtmp-dev libevent-dev
     $ git clone git://github.com/mitechie/bookie_parser.git
     $ cd bookie_parser
     $ make
