@@ -8,7 +8,6 @@ from pyramid.view import view_config
 
 from bookie_parser.lib.readable import ReadableRequest
 from bookie_parser.models import WebPageMgr
-# @TODO HTTPFound redirect the /readable /r to the api/v1/xxx
 
 
 LOG = logging.getLogger(__name__)
