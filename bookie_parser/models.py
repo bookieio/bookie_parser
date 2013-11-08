@@ -73,8 +73,6 @@ class WebPageMgr(object):
             'url': read.url,
         }
 
-        import pdb; pdb.set_trace()
-
         page = WebPage(
             hash_id=hash_id,
             readable=readable_article,

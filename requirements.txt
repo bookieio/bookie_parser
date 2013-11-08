@@ -1,4 +1,4 @@
-breadability==0.1.13
+breadability==0.1.14
 coverage
 fakeredis
 gevent
