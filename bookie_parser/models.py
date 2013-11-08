@@ -58,10 +58,27 @@ class WebPageMgr(object):
             LOG.error(str(exc))
             readable_title = 'Unknown'
 
+        # Json encoding a requests response breaks due to the CaseInsitiveDict
+        # in use.
+        request_info = {
+            'content_type': read.content_type,
+            'domain': read.domain,
+            'final_url': read.final_url,
+            'headers': dict(read.headers),
+            'is_error': read.is_error,
+            'request_time': read.request_time,
+            'start_time': str(read.start_time),
+            'status_code': read.status_code,
+            'status_message': read.status_message,
+            'url': read.url,
+        }
+
+        import pdb; pdb.set_trace()
+
         page = WebPage(
             hash_id=hash_id,
             readable=readable_article,
-            request=dict(read),
+            request=request_info,
             title=readable_title,
             url=url,
         )
