@@ -34,6 +34,10 @@ tests_require = [
 ]
 
 
+if sys.version_info < (2, 7):
+    install_requires.append("unittest2")
+
+
 setup(
     name='bookie_parser',
     version=version,
