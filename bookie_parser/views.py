@@ -43,7 +43,8 @@ def api_hash(request):
     environ = request.environ
     resp.headers['Content-Type'] = 'application/json'
     # allow cross domain requests: xdr
-    resp.headers['Access-Control-Allow-Origin'] = environ['HTTP_ORIGIN']
+    resp.headers['Access-Control-Allow-Origin'] = environ.get(
+        'HTTP_ORIGIN', "")
 
     return {
         'data': dict(page),
@@ -72,7 +73,8 @@ def api_parse(request):
 
     resp = request.response
     environ = request.environ
-    resp.headers['Access-Control-Allow-Origin'] = environ['HTTP_ORIGIN']
+    resp.headers['Access-Control-Allow-Origin'] = environ.get(
+        'HTTP_ORIGIN', '')
 
     if not url:
         params = request.json_body
