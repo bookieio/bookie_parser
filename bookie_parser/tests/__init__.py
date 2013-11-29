@@ -1,9 +1,13 @@
 import fakeredis
-import unittest
 from pyramid import testing
 from webtest import TestApp
 
 import bookie_parser.models
+
+try:
+    import unittest2 as unittest
+except ImportError:
+    import unittest
 
 
 class WebTestBase(unittest.TestCase):
