@@ -1,5 +1,8 @@
 bookie_parser
 ==========================
+.. image:: https://api.travis-ci.org/bookieio/bookie_parser.png?branch=master
+   :target: https://travis-ci.org/bookieio/bookie_parser.py
+
 This is a split of some of the code in Bookie for doing the readable parsing
 and (in the future) tag suggestion bits of Bookmarks. The idea is to spit this
 out, make it useful, and also help make it a scalable bit of code on its own.
@@ -18,7 +21,7 @@ I'd like to test this out by deploying to the Heroku cedar stack if possible,
 so you might see some odd bits of things I have to add to make that work.
 
 
-Installtion
+Installation
 ------------
 ::
 
