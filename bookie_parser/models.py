@@ -53,7 +53,7 @@ class WebPageMgr(object):
         readable_article = content.readable
 
         try:
-            readable_title = content.orig.title
+            readable_title = content._original_document.title
         except AttributeError, exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
