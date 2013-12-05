@@ -1,5 +1,5 @@
-import fakeredis
 from pyramid import testing
+import redis
 from webtest import TestApp
 
 import bookie_parser.models
@@ -13,8 +13,10 @@ except ImportError:
 class WebTestBase(unittest.TestCase):
 
     def setUp(self):
-        # Set up the fake redis server instance.
-        bookie_parser.models.server = fakeredis.FakeRedis()
+        redis_url = 'redis://localhost:6379/9'
+        bookie_parser.models.server = redis.Redis.from_url(redis_url)
+        bookie_parser.models.server.flushdb()
+
         from bookie_parser import main
         app = main({}, google_analytics='123')
         self.app = TestApp(app)

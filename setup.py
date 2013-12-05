@@ -7,18 +7,20 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.txt')).read()
 
-version = '0.3.1'
+version = '0.4.0'
 
 install_requires = [
     'breadability',
     'fakeredis',
-    'gevent',
-    'gunicorn',
+    # 'gevent',
+    # 'gunicorn',
     'httpcode',
     'lxml',
     'Mako',
-    'pyramid==1.4a3',
+    'pyramid',
     'python-dateutil',
+    'pyramid_mako',
+    'pyScss',
     'pytz',
     'redis',
     'requests',
@@ -32,6 +34,7 @@ tests_require = [
     'mock',
     'pylint',
     'pep8',
+    'WebTest',
 ]
 
 

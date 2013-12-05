@@ -32,12 +32,13 @@ class WebPageMgr(object):
         if hash_id:
             if WebPageMgr.exists(hash_id=hash_id):
                 doc = server.get(hash_id)
+                doc = doc.decode('utf-8')
                 js = json.loads(doc)
                 # This might be a reference instead of a real doc of data.
                 # If it is, load the hash_id the reference points to.
                 if 'reference' in js:
                     doc = server.get(js['reference'])
-                    js = json.loads(doc)
+                    js = json.loads(doc.decode('utf8'))
                 return WebPage(**js)
         else:
             LOG.debug('Hash id not found: ' + str(hash_id))
@@ -54,7 +55,7 @@ class WebPageMgr(object):
 
         try:
             readable_title = content._original_document.title
-        except AttributeError, exc:
+        except AttributeError as exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
 

@@ -21,7 +21,8 @@ from datetime import datetime
 from dateutil import parser
 from httpcode import STATUS_CODES
 from requests import ConnectionError
-from urlparse import urlparse
+
+from bookie_parser._compat import urlparse
 
 
 USER_AGENT = 'Bookie Parser/{version} ({url})'.format(
@@ -31,8 +32,13 @@ USER_AGENT = 'Bookie Parser/{version} ({url})'.format(
 
 
 def generate_hash(url_string):
+    # If the string is unicode, encode it.
+    if type(url_string) == str:
+        to_hash = url_string.encode('utf-8')
+    else:
+        to_hash = url_string
     m = hashlib.sha256()
-    m.update(url_string)
+    m.update(to_hash)
     return m.hexdigest()[:14]
 
 

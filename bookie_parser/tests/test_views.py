@@ -24,7 +24,7 @@ class TestViewable(WebTestBase):
 
         # follow the redirect and we land at the actual page.
         resp = resp.follow()
-        body = resp.body
+        body = resp.body.decode('utf8')
 
         self.assertTrue(
             resp.request.url.endswith(hashed),
@@ -96,7 +96,7 @@ class TestReadableJSON(WebTestBase):
             status=200)
 
         # follow the redirect and we land at the actual page.
-        body = json.loads(resp.body)
+        body = json.loads(resp.body.decode('utf8'))
 
         self.assertTrue('data' in body)
         self.assertTrue('readable' in body)
@@ -112,7 +112,7 @@ class TestReadableJSON(WebTestBase):
             status=500)
 
         # Load the page and we should get a nice error.
-        body = json.loads(resp.body)
+        body = json.loads(resp.body.decode('utf8'))
         self.assertTrue('error' in body)
 
 
@@ -133,8 +133,9 @@ class TestApi(WebTestBase):
                 'HTTP_ORIGIN': '127.0.0.1'
             },
             status=200)
+        resp.charset = 'utf8'
 
         # follow the redirect and we land at the actual page.
-        body = json.loads(resp.body)
+        body = json.loads(resp.body.decode('utf8'))
         self.assertIn('data', body)
         self.assertIn('readable', body)

@@ -41,7 +41,7 @@ def api_hash(request):
 
     resp = request.response
     environ = request.environ
-    resp.headers['Content-Type'] = 'application/json'
+    resp.headers['Content-Type'] = 'application/json; charset="utf8"'
     # allow cross domain requests: xdr
     resp.headers['Access-Control-Allow-Origin'] = environ.get(
         'HTTP_ORIGIN', "")
@@ -63,6 +63,7 @@ def api_parser_options(request):
     resp.headers['Access-Control-Allow-Headers'] = (
         '*'
         ',x-requested-with,Content-Type')
+    resp.headers['Content-Type'] = 'text/html; charset=utf8'
     return request.response
 
 
@@ -129,7 +130,7 @@ def readable(request):
     url = url.strip('/')
     LOG.debug('Checking url: ' + url)
 
-    request.response.headers['Content-Type'] = 'application/json'
+    request.response.headers['Content-Type'] = 'application/json; charset="utf8"'
     # allow cross domain requests: xdr
     request.response.headers['Access-Control-Allow-Origin'] = '*'
 
