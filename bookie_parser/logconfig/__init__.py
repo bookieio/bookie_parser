@@ -9,6 +9,18 @@ try:
 except ImportError:
     curses = None
 
+from sys import version_info
+PY3 = version_info[0] == 3
+
+
+if PY3:
+    bytes = bytes
+    unicode = str
+else:
+    bytes = str
+    unicode = unicode
+string_types = (bytes, unicode,)
+
 # Logging bits stolen and adapted from:
 # http://www.tornadoweb.org/documentation/_modules/tornado/options.html
 LOGLEVEL = "DEBUG"
@@ -64,42 +76,40 @@ class _LogFormatter(logging.Formatter):
         logging.Formatter.__init__(self, *args, **kwargs)
         self._color = color
         if color:
-            # The curses module has some str/bytes confusion in python3.
-            # Most methods return bytes, but only accept strings.
-            # The explict calls to unicode() below are harmless in python2,
-            # but will do the right conversion in python3.
-            fg_color = unicode(curses.tigetstr("setaf") or
-                               curses.tigetstr("setf") or "", "ascii")
+            fg_color = curses.tigetstr("setaf") or curses.tigetstr("setf") or ""
             self._colors = {
-                logging.DEBUG: unicode(
-                    curses.tparm(
-                        fg_color,
-                        curses.COLOR_CYAN),
-                    "ascii"),
-                logging.INFO: unicode(
-                    curses.tparm(fg_color, curses.COLOR_GREEN),
-                    "ascii"),
-                logging.WARNING: unicode(
-                    curses.tparm(fg_color, curses.COLOR_YELLOW),  # Yellow
-                    "ascii"),
-                logging.ERROR: unicode(
-                    curses.tparm(fg_color, curses.COLOR_RED),  # Red
-                    "ascii"),
+                logging.DEBUG: unicode(curses.tparm(
+                    fg_color,
+                    curses.COLOR_CYAN
+                )),
+                logging.INFO: unicode(curses.tparm(
+                    fg_color,
+                    curses.COLOR_GREEN
+                )),
+                logging.WARNING: unicode(curses.tparm(
+                    fg_color,
+                    curses.COLOR_YELLOW
+                )),  # Yellow
+                logging.ERROR: unicode(curses.tparm(
+                    fg_color,
+                    curses.COLOR_RED
+                )),  # Red
             }
-            self._normal = unicode(curses.tigetstr("sgr0"), "ascii")
+            self._normal = unicode(curses.tigetstr("sgr0"))
 
     def format(self, record):
         try:
             record.message = record.getMessage()
-        except Exception, e:
+        except Exception as e:
             record.message = "Bad message (%r): %r" % (e, record.__dict__)
         record.asctime = time.strftime(
             "%y%m%d %H:%M:%S", self.converter(record.created))
         prefix = '[%(levelname)1.1s %(asctime)s %(module)s:%(lineno)d]' % \
             record.__dict__
         if self._color:
-            prefix = (self._colors.get(record.levelno, self._normal) +
-                      prefix + self._normal)
+            prefix = (
+                self._colors.get(record.levelno, self._normal) +
+                prefix + self._normal)
         formatted = prefix + " " + record.message
         if record.exc_info:
             if not record.exc_text:

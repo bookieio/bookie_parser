@@ -11,6 +11,17 @@ LOG = logging.getLogger(__name__)
 redis_url = os.environ.get('OPENREDIS_URL', 'redis://localhost:6379')
 server = redis.Redis.from_url(redis_url)
 
+from sys import version_info
+PY3 = version_info[0] == 3
+
+
+if PY3:
+    bytes = bytes
+    unicode = str
+else:
+    bytes = str
+    unicode = unicode
+string_types = (bytes, unicode,)
 
 class WebPageMgr(object):
     """Manager for the WebPage data store object."""
@@ -32,6 +43,7 @@ class WebPageMgr(object):
         if hash_id:
             if WebPageMgr.exists(hash_id=hash_id):
                 doc = server.get(hash_id)
+                doc = doc.decode('utf-8')
                 js = json.loads(doc)
                 # This might be a reference instead of a real doc of data.
                 # If it is, load the hash_id the reference points to.
@@ -54,7 +66,7 @@ class WebPageMgr(object):
 
         try:
             readable_title = content._original_document.title
-        except AttributeError, exc:
+        except AttributeError as exc:
             LOG.error(str(exc))
             readable_title = 'Unknown'
 
@@ -81,6 +93,7 @@ class WebPageMgr(object):
             url=url,
         )
 
+        import pdb; pdb.set_trace()
         server.set(hash_id, json.dumps(dict(page)))
 
         # If the url and the final url are not the same then store an extra

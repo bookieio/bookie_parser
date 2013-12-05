@@ -14,7 +14,7 @@ pycurl
 pylint
 pyramid==1.4a3
 pyramid_debugtoolbar
-pyScss==1.1.3
+-e git+https://github.com/Kronuz/pyScss.git#egg=pyScss
 python-dateutil
 pytz
 redis

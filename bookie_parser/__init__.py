@@ -10,8 +10,8 @@ def main(global_config, **settings):
     """
     # Make sure we setup a directory for the templates to come out of.
     settings['mako.directories'] = 'bookie_parser:templates'
-
     config = Configurator(settings=settings)
+    config.include('pyramid_mako')
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('index', '/')
 

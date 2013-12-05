@@ -1,4 +1,4 @@
-<% from urlparse import urlparse %>
+<% from bookie_parser.lib.readable import urlparse %>
 <html>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
