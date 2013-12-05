@@ -21,10 +21,8 @@ from datetime import datetime
 from dateutil import parser
 from httpcode import STATUS_CODES
 from requests import ConnectionError
-try:
-    from urlparse import urlparse
-except ImportError:
-    from urllib.parse import urlparse
+
+from bookie_parser._compat import urlparse
 
 
 USER_AGENT = 'Bookie Parser/{version} ({url})'.format(

@@ -11,17 +11,6 @@ LOG = logging.getLogger(__name__)
 redis_url = os.environ.get('OPENREDIS_URL', 'redis://localhost:6379')
 server = redis.Redis.from_url(redis_url)
 
-from sys import version_info
-PY3 = version_info[0] == 3
-
-
-if PY3:
-    bytes = bytes
-    unicode = str
-else:
-    bytes = str
-    unicode = unicode
-string_types = (bytes, unicode,)
 
 class WebPageMgr(object):
     """Manager for the WebPage data store object."""
@@ -49,7 +38,7 @@ class WebPageMgr(object):
                 # If it is, load the hash_id the reference points to.
                 if 'reference' in js:
                     doc = server.get(js['reference'])
-                    js = json.loads(doc)
+                    js = json.loads(doc.decode('utf8'))
                 return WebPage(**js)
         else:
             LOG.debug('Hash id not found: ' + str(hash_id))
@@ -93,7 +82,6 @@ class WebPageMgr(object):
             url=url,
         )
 
-        import pdb; pdb.set_trace()
         server.set(hash_id, json.dumps(dict(page)))
 
         # If the url and the final url are not the same then store an extra

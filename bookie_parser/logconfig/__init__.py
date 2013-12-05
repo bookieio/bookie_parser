@@ -9,17 +9,9 @@ try:
 except ImportError:
     curses = None
 
-from sys import version_info
-PY3 = version_info[0] == 3
+# Pick up the py3 compatible version of strings/unicode.
+from bookie_parser._compat import unicode
 
-
-if PY3:
-    bytes = bytes
-    unicode = str
-else:
-    bytes = str
-    unicode = unicode
-string_types = (bytes, unicode,)
 
 # Logging bits stolen and adapted from:
 # http://www.tornadoweb.org/documentation/_modules/tornado/options.html
