@@ -14,6 +14,7 @@ We need to provide back to the caller
 
 """
 import hashlib
+import pkg_resources
 import pytz
 import requests
 
@@ -27,7 +28,7 @@ from bookie_parser._compat import urlparse
 
 USER_AGENT = 'Bookie Parser/{version} ({url})'.format(
     url="https://github.com/mitechie/bookie_parser",
-    version='0.3.1'
+    version=pkg_resources.get_distribution("bookie_parser").version
 )
 
 
