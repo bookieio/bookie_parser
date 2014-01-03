@@ -130,7 +130,9 @@ def readable(request):
     url = url.strip('/')
     LOG.debug('Checking url: ' + url)
 
-    request.response.headers['Content-Type'] = 'application/json; charset="utf8"'
+    request.response.headers['Content-Type'] = \
+        'application/json; charset="utf8"'
+
     # allow cross domain requests: xdr
     request.response.headers['Access-Control-Allow-Origin'] = '*'
 
